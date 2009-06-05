@@ -1,10 +1,45 @@
-<span class="graytitle">材料から検索</span>
-<form action="/icookpad/search" method="get" >
+<span class="graytitle">詳細検索</span>
+<form action="/search" method="get" >
 <ul class="pageitem">
-  <li class="form"><input name="word" placeholder="必須" type="text" value="<%= params[:word] %>"/></li>
+  <li class="form">
+  <select name="tv_station">
+    <option value="">局をえらぶ</option>
+    <option value="200" >NHK総合</option>
+    <option value="94" >日本テレビ</option>
+
+    <option value="77" >TBS</option>
+    <option value="105" >フジテレビ</option>
+    <option value="51" >テレビ朝日</option>
+    <option value="65" >テレビ東京</option>
+  </select>
+  <span class="arrow"></span>
+  </li>
+  <li class="form">
+  <select name="date">
+    <option value="20090605" >2009年6月5日 （金）　　</option>
+    <option value="20090604" >2009年6月4日 （木）　　</option>
+    <option value="20090603" >2009年6月3日 （水）　　</option>
+    <option value="20090602" >2009年6月2日 （火）　　</option>
+    <option value="20090601" >2009年6月1日 （月）　　</option>
+    <option value="20090531" >2009年5月31日 （日）　　</option>
+
+    <option value="20090530" >2009年5月30日 （土）　　</option>
+    <option value="20090529" >2009年5月29日 （金）　　</option>
+    <option value="14" >過去14日の放映　　</option>
+  </select></li>
+  <li class="form">
+  <select name="time_range">
+    <option value="0"  selected>全ての時間帯　　</option>
+
+    <option value="1" >5:00〜12:00　　</option>
+    <option value="2" >12:00〜19:00　　</option>
+    <option value="3" >19:00〜23:00　　</option>
+    <option value="4" >23:00〜5:00　　</option>
+  </select></li>
   <li class="form"><input name="search" type="submit" value="検索" /></li>
 </ul>
 </form>
+<% if @items %>
 <span class="graytitle"><%= "#{CGI.escapeHTML(params[:word])}のレシピ#{@result_count}品" %></span>
 <ul class="pageitem">
   <% if @recipes.length == 0 %>
@@ -23,3 +58,4 @@
   <li id="next" class="form"><input name="search" type="submit" value="次の10件を読み込む" onclick="loadNext('search/<%= CGI.escape(params[:word]) %>', <%= @next['href'].gsub(/.*page=(\d+)&.*/, "\\1") %>); return false;" /></li>
   <% end %>
 </ul>
+<% end %>
