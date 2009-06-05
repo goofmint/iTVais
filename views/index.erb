@@ -1,0 +1,41 @@
+<span class="graytitle">カテゴリ</span>
+<ul class="pageitem"> 
+  <% @categories.each_with_index do |category, i| %>
+  <% next unless category[:href].match(/.*cate_id=(.*)/) %>
+  <li class="form"><input name="kw<%= i %>" type="button" value="<%= NKF.nkf('-w', category.inner_html) %>" onclick="window.location = '/category/<%= category[:href].match(/.*cate_id=(.*)/)[1] %>'; return false;"/></li>
+  <% end %>
+</ul>
+
+<% if @new_tvs.size > 0 %>
+<span class="graytitle">最新テレビ情報一覧</span>
+<ul class="pageitem"> 
+  <% @new_tvs.each_with_index do |info, i| %>
+    <% next unless info.search('table a')[0] %>
+    <li class="menu">
+      <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', info.search('table a')[0].inner_html) %>" onclick="window.location = '/tv/<%= info.search('table a')[0][:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= info.search('table a')[0][:href].match(/.*i_id=([0-9]*).*/)[1] %>'; return false;"/>
+    </li>
+  <% end %>
+</ul>
+<% end %>
+<% old = "" %>
+<% @new_lists.each_with_index do |news, i| %>
+  <% news.search("table").each_with_index do |table, i| %>
+    <% next if i == 1 %>
+    <% if i == 2 %>
+      <span class="graytitle"><%= NKF.nkf('-w', table.search(".pa_t10").inner_html).match(/.*「(.*)」.*/)[1] %>の最新情報</span>
+      <ul class="pageitem">
+    <% else %>
+      <% next unless table.search('td.pa_l5 a')[0] %>
+      <% next if old == NKF.nkf('-w', table.search('td.pa_l5 a')[0].inner_html) %>
+      <% old = NKF.nkf('-w', table.search('td.pa_l5 a')[0].inner_html) %>
+      <li class="menu">
+      <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', table.search('td.pa_l5 a')[0].inner_html) %>" onclick="window.location = '/tv/<%= table.search('td.pa_l5 a')[0][:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= table.search('td.pa_l5 a')[0][:href].match(/.*i_id=([0-9]*).*/)[1] %>'; return false;"/>
+      </li>
+    <% end %>
+  <% end %>
+  </ul>
+<% end %>
+
+<ul class="pageitem"> 
+  <li class="form"><input name="link" type="button" value="Cookpadを開く" onclick="window.location = 'http://cookpad.com/'; return false;"/></li>
+</ul>
