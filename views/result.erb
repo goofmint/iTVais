@@ -1,0 +1,37 @@
+<style>
+  ul.a-line-letters {
+    width: 295px;
+  }
+  ul.a-line-letters li {
+    list-style-type: none; float: left; padding: 6px; border-left: 1px solid #000;
+  }
+  ul.a-line-letters li:first-child {
+    padding-left: 8px;
+    border-left: none;
+  }
+  ul.a-line-letters a {
+    text-decoration: none;
+  }
+</style>
+<span class="graytitle"><%= "番組" %></span>
+<% if @programs.size == 0 %>
+  <ul class="pageitem">
+    <li class="textbox">条件に該当する番組が見つかりませんでした。</li>
+  </ul>
+<% else %>
+  <ul class="pageitem a-line-letters">
+  <% @a_line_letters.each_with_index do |al, i| %>
+    <li><%= link_to_a_line(al) %></li>
+  <% end %>
+  </ul>
+  <% @letters.each_with_index do |l, i| %>
+    <ul class="pageitem" style="clear: both;">
+      <span class="header" style="padding: 7px 0 0 7px;"<%= id_for_a_line(l) %>><%= l %></span>
+      <% (@programs[i]/'td.pa_l5').each do |p| %>
+        <li class="textbox">
+        <a href="<%= p.at('a')[:href] %>"><%= p.inner_text %></a>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>

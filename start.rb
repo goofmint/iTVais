@@ -9,12 +9,8 @@ require 'erb'
 require 'hpricot'
 require 'open-uri'
 require 'nkf'
-
-helpers do
-  def toutf8(str)
-    NKF.nkf('-w', str) 
-  end
-end
+require 'lib/jstrftime'
+require 'lib/helpers'
 
 get '/' do
   url = "http://www.tvais.jp/"
@@ -29,18 +25,20 @@ get '/' do
 end
 
 get '/search' do
-  if params[:date] && params[:time_range] && params[:tv_station]
-    '引数あったら検索結果だよ'
-    "#{params[:date]} #{params[:time_range]} #{params[:tv_station]}"
+  erb :search
+end
 
-    url = "http://www.tvais.jp/tvpg_search.php?tv_station=#{params[:tv_station]}&tele_day=#{params[:date]}&time_zone=#{params[:time_range]}"
-    doc = Hpricot(open(url))
-    toutf8(doc.at('title').inner_text)
-  else
-    # :dateと:time_rangeは必須だよ
-    '引数なかったら検索フォームだよ'
-    erb :search
-  end
+get '/result' do
+  return if !params[:date] || !params[:time_range] || !params[:tv_station]
+
+  url = "http://www.tvais.jp/tvpg_search.php?tv_station=#{params[:tv_station]}&tele_day=#{params[:date]}&time_zone=#{params[:time_range]}"
+  doc = Hpricot(NKF.nkf('-w', open(url).read))
+
+  @a_line_letters = (doc/'div.pa_t10 table strong').map{|tag| tag.inner_text}
+  @letters = (doc/'div.pa_t20 table td.txt14_b').map{|tag| tag.inner_text}
+  @programs = doc/'div.pa_t20 table table'
+
+  erb :result
 end
 
 Sinatra::Application.run
