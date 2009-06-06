@@ -41,4 +41,35 @@ get '/result' do
   erb :result
 end
 
+get '/tv/:tv_id' do
+  return if !params[:tv_id]
+
+  url = "http://www.tvais.jp/tv_dte.php?tv_id=#{params[:tv_id]}"
+  doc = Hpricot(NKF.nkf('-w', open(url).read))
+
+  @tv_title = doc.at(:title).inner_text # 番組名
+
+  # その他？# トピック# 出演# キャラクター# ゲスト
+  @summary = [
+    ["その他", doc.at("div.txt10[text()*='【その他】']")],
+    ["トピック", doc.at("div.txt10[text()*='【トピック】']")],
+    ["出演", doc.at("div.txt10[text()*='【出演】']")],
+    ["キャラクター", doc.at("div.txt10[text()*='【キャラクター】']")],
+    ["ゲスト", doc.at("div.txt10[text()*='【ゲスト】']")],
+  ]
+
+  # 番組構成
+  @parts = doc/"div[@id^='contOP_']"
+
+  #   紹介された商品へのリンク
+  # 前回へのリンク又は次回へのリンク（あれば）
+  @prev = doc/"td.pa_5[text()*='前回']"
+  @next = doc/"td.pa_5[text()*='次回']"
+
+  erb :tv
+end
+
+get '/item/:item_id' do
+end
+
 Sinatra::Application.run

@@ -29,7 +29,7 @@
       <span class="header" style="padding: 7px 0 0 7px;"<%= id_for_a_line(l) %>><%= l %></span>
       <% (@programs[i]/'td.pa_l5').each do |p| %>
         <li class="textbox">
-        <a href="<%= p.at('a')[:href] %>"><%= p.inner_text %></a>
+        <a href="/tv/<%= (p.at('a')[:href]).slice(/tv_id=(\d+)/, 1) %>"><%= p.inner_text %></a>
         </li>
       <% end %>
     </ul>
