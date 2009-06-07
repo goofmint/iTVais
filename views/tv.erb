@@ -54,7 +54,7 @@ parts
     <li class="textbox item-header">紹介された商品</li>
     <% (part/"a[@href^='item_dte.php']").each do |item| %>
       <li class="textbox item">
-      <a href="/item/<%= item[:href].slice(/i_id=(\d+)/, 1) %>"><%= item.inner_text %></a>
+      <a href="/item/<%= item[:href].slice(/i_id=(\d+)/, 1) %>/<%= item[:href].slice(/tv_id=(\d+)/, 1) %>"><%= item.inner_text %></a>
       </li>
     <% end %>
   </ul>

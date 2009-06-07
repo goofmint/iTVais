@@ -44,7 +44,14 @@ end
 get '/tv/:tv_id' do
   return if !params[:tv_id]
 
-  url = "http://www.tvais.jp/tv_dte.php?tv_id=#{params[:tv_id]}"
+  if params[:tv_id] =~ /^t-/
+    # t_id対策 なんでか元サイトのリンクがtv_idではなくt_idになる場合がある
+    params[:tv_id] = params[:tv_id].split('-').last
+    url = "http://www.tvais.jp/tv_dte.php?t_id=#{params[:tv_id]}"
+  else
+    url = "http://www.tvais.jp/tv_dte.php?tv_id=#{params[:tv_id]}"
+  end
+
   doc = Hpricot(NKF.nkf('-w', open(url).read))
 
   @tv_title = doc.at(:title).inner_text # 番組名
@@ -69,7 +76,33 @@ get '/tv/:tv_id' do
   erb :tv
 end
 
-get '/item/:item_id' do
+get '/item/:item_id/:tv_id' do
+  return if !params[:tv_id] || !params[:item_id]
+
+  url = "http://www.tvais.jp/item_dte.php?i_id=#{params[:item_id]}&tv_id=#{params[:tv_id]}"
+  doc = Hpricot(NKF.nkf('-w', open(url).read))
+
+  # カテゴリ
+  @category = doc.at("div#main_frame").at(:table).inner_text.strip
+
+  # 番組情報
+  @tv = doc.at("div#main_frame").at("td.pa_t10")
+  (@tv/:a).first[:href] = "/tv/#{(@tv/:a).first[:href].slice(/tv_id=(\d+)/, 1)}" # 番組へのリンク 
+  (@tv/:a).last[:href] = "/result?tv_station=#{(@tv/:a).last[:href].slice(/tv_station=(\d+)/, 1)}&date=14&time_range=0" # 局へのリンク
+  @part = doc.at("div#main_frame").at("td.pa_t5").inner_text
+
+  # 商品情報
+  section =  doc.at("div#main_frame").at("td.pa_l20")
+  @item = {
+    :image_url => doc.at("div#main_frame").at(:img)[:src],
+    :name => section.at("div.txt14_b").inner_text,
+    :info => section.at("div.pa_t5"),
+    :link => section.at("td.pa_l5")
+  }
+
+  @item[:image_url] = 'http://www.tvais.jp/img/no_image.gif' if @item[:image_url] == './img/no_image.gif'
+
+  erb :item
 end
 
 Sinatra::Application.run
