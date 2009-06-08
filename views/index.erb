@@ -12,7 +12,7 @@
   <% @new_tvs.each_with_index do |info, i| %>
     <% next unless info.search('table a')[0] %>
     <li class="menu">
-      <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', info.search('table a')[0].inner_html) %>" onclick="window.location = '/tv/<%= info.search('table a')[0][:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= info.search('table a')[0][:href].match(/.*i_id=([0-9]*).*/)[1] %>'; return false;"/>
+      <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', info.search('table a')[0].inner_html) %>" onclick="window.location = '/item/<%= info.search('table a')[0][:href].match(/.*i_id=([0-9]*).*/)[1] %>/<%= info.search('table a')[0][:href].match(/.*tv_id=([0-9]*).*/)[1] %>'; return false;"/>
     </li>
   <% end %>
 </ul>
