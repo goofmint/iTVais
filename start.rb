@@ -131,7 +131,7 @@ get '/item/:item_id/:tv_id' do
   doc = Hpricot(NKF.nkf('-w', open(url).read))
 
   # カテゴリ
-  @category = doc.at("div#main_frame").at(:table).inner_text.strip
+  @category = doc.at("div#main_frame").at("table td").inner_text
 
   # 番組情報
   @tv = doc.at("div#main_frame").at("td.pa_t10")
@@ -147,7 +147,7 @@ get '/item/:item_id/:tv_id' do
     :info => section.at("div.pa_t5"),
     :link => section.at("td.pa_l5")
   }
-
+  @title = @item[:name]
   @item[:image_url] = 'http://www.tvais.jp/img/no_image.gif' if @item[:image_url] == './img/no_image.gif'
 
   erb :item
