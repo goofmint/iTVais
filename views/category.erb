@@ -1,14 +1,31 @@
-# -*- coding: utf-8 -*-
-<span class="graytitle"><%= NKF.nkf('-w', doc.search("div#main_frame table td")[0].inner_html) %></span>
+<span class="graytitle"><%= @newest[:tv_title] %></span>
+
 <ul class="pageitem">
+  <li class="textbox">
+    <%= @newest[:description][0..250] %>
+  </li>
+  <span class="header" style="padding: 7px 0 0 7px;">出演</span>
+  <li class="textbox">
+    <% @newest[:actors].each_with_index do |actor, i| %>
+      <% break if i == 4 %>
+      <% next if actor.inner_text.size == 0 %>
+        <%= actor.inner_text %>, 
+    <% end %>その他
+  </li>
+</ul>
+
+<% @date_list.each do |date| %>
+<span class="graytitle"><%= date[:date] %></span>
+<ul class="pageitem">
+  <% date[:shows].each do |shows| %>
     <li class="textbox">
-      <div style="margin-left: <%= image[:width] %>px;">
-        <%= NKF.nkf('-w', doc.search("div.pa_t10 span.txt14_b")[0].inner_html) %>
-      </div>
+      <a href="/item/<%= shows[:i_id] %>/<%= shows[:tv_id] %>"><%= shows[:title] %></a> (<a href="/tv/<%= shows[:tv_id] %>"><%= shows[:tv_title] %></a>)
+      (<a href="/result?tv_station=<%= shows[:tv_station] %>&date=<%= shows[:tele_day] %>&time_range=<%= shows[:time_zone] %>"><%= shows[:tv_station_name] %></a>)<br />
+      <%= shows[:description][0..100] %>
     </li>
   <% end %>
 </ul>
-
+<% end %>
 <ul class="pageitem"> 
   <li class="form"><input name="link" type="button" value="TVaisを開く" onclick="window.location = 'http://www.tvais.jp/'; return false;"/></li>
 </ul>

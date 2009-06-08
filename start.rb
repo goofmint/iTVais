@@ -1,4 +1,3 @@
-#!/home/realtimemachine/local/ruby/bin/ruby 
 # -*- coding: utf-8 -*-
 
 require 'rubygems'
@@ -25,15 +24,16 @@ get '/' do
 end
 
 get '/search' do
+  @leftnav = '<a href="/"><img alt="home" src="/images/home.png" /></a>'
   erb :search
 end
 
 get '/result' do
+  @leftnav = '<a href="/"><img alt="home" src="/images/home.png" /></a>'
   return if !params[:date] || !params[:time_range] || !params[:tv_station]
-
   url = "http://www.tvais.jp/tvpg_search.php?tv_station=#{params[:tv_station]}&tele_day=#{params[:date]}&time_zone=#{params[:time_range]}"
   doc = Hpricot(NKF.nkf('-w', open(url).read))
-
+  @title = doc.at(:title).inner_html.gsub("&nbsp;-&nbsp;TVais（テレビアイズ）", "") # 検索結果
   @a_line_letters = (doc/'div.pa_t10 table strong').map{|tag| tag.inner_text}
   @letters = (doc/'div.pa_t20 table td.txt14_b').map{|tag| tag.inner_text}
   @programs = doc/'div.pa_t20 table table'
@@ -41,11 +41,54 @@ get '/result' do
   erb :result
 end
 
-get '/category/:id' do 
-  doc = Hpricot(open("http://www.tvais.jp/cate_top.php?cate_id=#{params[:id]}"))
+get '/category/:id' do
+  url = "http://www.tvais.jp/cate_top.php?cate_id=#{params[:id]}"
+  doc = Hpricot(NKF.nkf('-w', open(url).read))
+  @leftnav = '<a href="/"><img alt="home" src="/images/home.png" /></a>'
+  @title = doc.search("div#main_frame table td")[0].inner_html
+  @newest = { :date => doc.at("td.pa_t10").at("span.txt14_b").inner_html.gsub("&nbsp;", ""),
+    :tv_id => doc.at("td.pa_t10").at("a.txt14_b")[:href].match(/.*tv_id=([0-9]*?)$/)[1],
+    :tv_title => doc.at("td.pa_t10").at("a.txt14_b").inner_text,
+    :tv_station => doc.at("td.pa_t10").search("a.txt14_b")[1][:href].match(/.*tv_station=([0-9]*).*/)[1],
+    :tele_day => doc.at("td.pa_t10").search("a.txt14_b")[1][:href].match(/.*tele_day=([0-9]*).*/)[1],
+    :time_zone => doc.at("td.pa_t10").search("a.txt14_b")[1][:href].match(/.*time_zone=([0-9]*).*/)[1],
+    :tv_station_name => doc.at("td.pa_t10").search("a.txt14_b")[1].inner_text,
+    :corner => doc.at("td.pa_t5").inner_text,
+    :img => doc.search("div.pa_t10 table")[2].at("table").at("img")[:src],
+    :width => doc.search("div.pa_t10 table")[2].at("table").at("img")[:width],
+    :title => doc.search("div.pa_t10 table")[2].at("table").at(".txt14_b").inner_text,
+    :actors => doc.search("td.pa_t5[text()*='出演'] a"),
+    :description => doc.at("div.pa_t5").inner_text
+  }
+  list_doc = Hpricot(doc.to_html.gsub(/.*<!--今日のトピックス 開始-->/m, "").gsub(/<!--メインコンテンツ終了-->.*/m, ""))
+  @date_list = []
+  old_title = ""
+  list_doc.search("div.cle").each_with_index { |date, i|
+    date = { :date => date.at("table table td").inner_text, :shows => []}
+    list_doc.search("div.pa_t10")[i].search("table").each do |shows|
+      next if shows.at("td.pa_l5 a").inner_text == old_title
+      old_title = shows.at("td.pa_l5 a").inner_text
+      ary = {
+        :title => shows.at("td.pa_l5 a").inner_text.gsub("「", "").gsub("」", ""),
+        :i_id  => shows.at("td.pa_l5 a")[:href].match(/i_id=([0-9]*)/)[1],
+        :tv_id => shows.at("td.pa_l5 a")[:href].match(/tv_id=([0-9]*)/)[1],
+        :tv_title => shows.search("td.pa_l5 a")[1].inner_text,
+        :tv_station_name => shows.search("td.pa_l5 a")[2].inner_text,
+        :tv_station => shows.search("td.pa_l5 a")[2][:href].match(/tv_station=([0-9]*)/)[1],
+        :tele_day => shows.search("td.pa_l5 a")[2][:href].match(/tele_day=([0-9]*)/)[1],
+        :time_zone => shows.search("td.pa_l5 a")[2][:href].match(/time_zone=([0-9]*)/)[1],
+        :description => shows.search("td.pa_t5").inner_text
+      }
+      date[:shows] << ary
+    end
+    @date_list << date
+    date = {}
+  }
+  erb :category
 end
 
 get '/tv/:tv_id' do
+  @leftnav = '<a href="/"><img alt="home" src="/images/home.png" /></a>'
   return if !params[:tv_id]
 
   if params[:tv_id] =~ /^t-/
@@ -81,6 +124,7 @@ get '/tv/:tv_id' do
 end
 
 get '/item/:item_id/:tv_id' do
+  @leftnav = '<a href="/"><img alt="home" src="/images/home.png" /></a>'
   return if !params[:tv_id] || !params[:item_id]
 
   url = "http://www.tvais.jp/item_dte.php?i_id=#{params[:item_id]}&tv_id=#{params[:tv_id]}"

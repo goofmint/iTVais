@@ -39,13 +39,13 @@
               <img src="<%= image[:src] %>" border="0" width="<%= image[:width] %>" />
             </p>
             <div style="margin-left: <%= image[:width] %>px;">
-              <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', html.inner_html) %>" onclick="window.location = '/tv/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>'; return false;"/>
+              <input name="wr<%= i %>" type="button" value="<%= NKF.nkf('-w', html.inner_html) %>" onclick="window.location = '/item/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>'; return false;"/>
             </div>
           <% else %>
-            <div><a href="/tv/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>"><%= NKF.nkf('-w', html.inner_html) %></a></div>
+            <div><a href="/item/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>"><%= NKF.nkf('-w', html.inner_html) %></a></div>
           <% end %>
         <% else %>
-          <div><a href="/tv/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>/show/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>"><%= NKF.nkf('-w', html.inner_html) %></a></div>
+          <div><a href="/item/<%= html[:href].match(/.*i_id=([0-9]*).*/)[1] %>/<%= html[:href].match(/.*tv_id=([0-9]*).*/)[1] %>"><%= NKF.nkf('-w', html.inner_html) %></a></div>
         <% end %>
         <% top = false %>
     </li>
