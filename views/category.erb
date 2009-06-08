@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+<span class="graytitle"><%= NKF.nkf('-w', doc.search("div#main_frame table td")[0].inner_html) %></span>
+<ul class="pageitem">
+    <li class="textbox">
+      <div style="margin-left: <%= image[:width] %>px;">
+        <%= NKF.nkf('-w', doc.search("div.pa_t10 span.txt14_b")[0].inner_html) %>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<ul class="pageitem"> 
+  <li class="form"><input name="link" type="button" value="TVaisを開く" onclick="window.location = 'http://www.tvais.jp/'; return false;"/></li>
+</ul>

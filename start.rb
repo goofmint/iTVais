@@ -41,4 +41,8 @@ get '/result' do
   erb :result
 end
 
+get '/category/:id' do 
+  doc = Hpricot(open("http://www.tvais.jp/cate_top.php?cate_id=#{params[:id]}"))
+end
+
 Sinatra::Application.run

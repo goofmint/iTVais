@@ -1,0 +1,700 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+
+"http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="ja"> 
+<head> 
+<meta name="copyright" content="Copyright (C) 2000-2009 WireAction Inc. all rights reserved."> 
+<meta name="description" content="テレビ番組で紹介された音楽・CDに関するアイテム情報ならテレビアイズで見つかります"> 
+<meta name="keywords" content="音楽・CD,テレビ,番組,タレント,紹介,音楽,CD,映画,DVD,コミック,雑誌,グルメ,お店,イベント,舞台公演,旅行,サイト,通販,TVアイズ"> 
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-JP"> 
+<meta http-equiv="Content-Script-Type" content="text/javascript"> 
+<meta http-equiv="Content-Style-Type" content="text/css"> 
+ 
+<title> 
+音楽・CDのテレビ情報&nbsp;-&nbsp;美の巨人たち&nbsp;-&nbsp;テレビ東京&nbsp;-&nbsp;TVais（テレビアイズ）
+</title> 
+<link rel="stylesheet" href="css/style.css" type="text/css"> 
+<script src="js/ajax.js" type="text/javascript"></script> 
+</head> 
+ 
+<body> 
+ 
+<div align="center"> 
+ 
+<div id="big_frame"> 
+ 
+<!--ヘッダー1開始--> 
+<div id="head_frame"> 
+ 
+<div id="main_copy" class="pa_l10"> 
+	<h1 id="main_copy_txt">テレビ番組で紹介されたCD・DVD・お店・旅行・サイト・通販の最新情報ならテレビアイズ（TVアイズ）</h1> 
+	<p id="logo"><a href="./"><img src="img/tvais_logo.gif" width="252" height="53" alt="テレビ情報検索サイト　TV ais" border="0"></a></p> 
+</div> 
+ 
+<div class="h_affi"> 
+<!--↓アフィリエイト広告↓--> 
+<a href="cv_ad01.php" target="new"><img src="img/bannar/glliver_msn.gif" width="468" height="60" alt="あなたの愛車は、今いくら？≪ガリバー≫の愛車査定" border="0"></a> 
+<!--↑アフィリエイト広告↑--> 
+</div> 
+ 
+</div> 
+<!--ヘッダー1終了--> 
+ 
+<!--ヘッダー2開始--> 
+<div class="gnv"> 
+<!--<form name="form5" method="post">--> 
+ 
+<!--メニュー開始--> 
+<ul id="t_menu"> 
+<li id="mn_music"><a href="cate_top.php?cate_id=1" id="m_self">音楽・CD</a></li> 
+<li id="mn_movie_dvd"><a href="cate_top.php?cate_id=2">映画・DVD</a></li> 
+<li id="mn_books"><a href="cate_top.php?cate_id=3">コミック・雑誌</a></li> 
+<li id="mn_gurume"><a href="cate_top.php?cate_id=4">グルメ・お店</a></li> 
+<li id="mn_event"><a href="cate_top.php?cate_id=5">イベント・舞台公演</a></li> 
+<li id="mn_trip"><a href="cate_top.php?cate_id=6">旅行・デート</a></li> 
+<li id="mn_news"><a href="cate_top.php?cate_id=0">ニュース・サイト</a></li> 
+<li id="mn_tsuhan"><a href="cate_7.php">テレビ通販</a></li> 
+</ul><!--メニュー終了--> 
+ 
+<div id="head_frame2"> 
+<form name="form5" method="post"> 
+<table border="0" width="980" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td height="63" width="543" valign="top" class="search_back"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td height="6" colspan="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+	</tr> 
+	<tr> 
+	<td rowspan="2" width="3"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+	<td rowspan="2" width="15"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+	<td height="5" colspan="3"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+	</tr> 
+	<tr> 
+	<td> 
+		<table border="0" cellpadding="0" cellspacing="0" class="search_pulldown"> 
+		<tr> 
+		<td align="left"><img src="img/search_broadcast.gif" width="39" height="13" alt="放送局"></td> 
+		<td width="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+		<td align="left"><img src="img/search_day.gif" width="39" height="13" alt="放送日"></td> 
+		<td width="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+		<td align="left"><img src="img/search_time.gif" width="39" height="13" alt="時間帯"></td> 
+		</tr> 
+		<tr> 
+                <td><select name="tv_station" id="tv_station_id"> 
+                        <option value="">局をえらぶ　　</option> 
+                        <option value="200" >NHK総合</option> 
+                        <option value="94" >日本テレビ</option> 
+                        <option value="77" >TBS</option> 
+                        <option value="105" >フジテレビ</option> 
+                        <option value="51" >テレビ朝日</option> 
+                        <option value="65" >テレビ東京</option> 
+                </select></td> 
+		<td width="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+		<td><select name="tele_day"> 
+                        <option value="20090606" >2009年6月6日 （土）　　</option> 
+                        <option value="20090605" >2009年6月5日 （金）　　</option> 
+                        <option value="20090604" >2009年6月4日 （木）　　</option> 
+                        <option value="20090603" >2009年6月3日 （水）　　</option> 
+                        <option value="20090602" >2009年6月2日 （火）　　</option> 
+                        <option value="20090601" >2009年6月1日 （月）　　</option> 
+                        <option value="20090531" >2009年5月31日 （日）　　</option> 
+                        <option value="20090530" >2009年5月30日 （土）　　</option> 
+                        <option value="14" >過去14日の放映　　</option> 
+		</select></td> 
+		<td width="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+		<td><select name="time_zone"> 
+			<option value="0"  selected>全ての時間帯　　</option> 
+			<option value="1" >5:00〜12:00　　</option> 
+			<option value="2" >12:00〜19:00　　</option> 
+			<option value="3" >19:00〜23:00　　</option> 
+			<option value="4" >23:00〜5:00　　</option> 
+		</select></td> 
+		</tr> 
+		</table> 
+	</td> 
+	<td width="5"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+	<td valign="bottom"><a href="javascript:GoCheck()"><img src="img/btn/search_go_btn.gif" width="87" height="24" alt="詳細検索" border="0"></a></td> 
+	</tr> 
+	</table> 
+</form> 
+</td> 
+<td width="437" valign="middle" align="left" style="background-image: url(img/search_back2.gif)" class="google_search"> 
+ 
+<!-- SiteSearch Google --> 
+ 
+<form method=get action="http://www.google.co.jp/search"> 
+<table bgcolor=""><tr valign=middle><td> 
+<a href="http://www.google.co.jp/"> 
+<img src="http://www.google.com/logos/Logo_40wht.gif" 
+
+border="0" alt="Google" align="absmiddle"></a> 
+</td> 
+<td> 
+<input type=text name=q size=26 maxlength=255 value=""> 
+<input type=hidden name=ie value=EUC-JP> 
+<input type=hidden name=oe value=EUC-JP> 
+<input type=hidden name=hl value="ja"> 
+<input type=submit name=btnG value="Google 検索"> 
+<font size=-1> 
+<input type=hidden name=domains value="http://www.tvais.jp"><br> 
+<input type=radio name=sitesearch value=""> WWW を検索 
+<input type=radio name=sitesearch value="http://www.tvais.jp" checked> http://www.tvais.jp を検索
+</font> 
+</td></tr></table> 
+</form> 
+ 
+<!-- SiteSearch Google --> 
+ 
+</td> 
+</tr> 
+</table> 
+</div> 
+ 
+<!--</form>--> 
+</div> 
+<!--ヘッダー2終了--> 
+ 
+<!--メインコンテンツ開始--> 
+ 
+<div id="main_frame" class="cle" style="padding: 10px 0 0 20px;"> 
+ 
+<!--コンテンツ説明開始--> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td>音楽・CDの最新情報です！！</td> 
+</tr> 
+</table> 
+<!--コンテンツ説明終了--> 
+ 
+<!--main アイテム開始--> 
+<div class="pa_t10"> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td width="700" class="back_ora_long"> 
+	<table border="0" width="680" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td>音楽・CD</td> 
+	<td align="right" class="pa_r10">&nbsp;</td> 
+	</tr> 
+	</table> 
+</td> 
+</tr> 
+</table> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td class="pa_t10"><span class="txt14_b">2009/6/6（土）&nbsp;22:00</span>　<a href="tv_dte.php?tv_id=244671" class="txt14_b">美の巨人たち</a>　（&nbsp;<a href="tvpg_search.php?tv_station=65&tele_day=14&time_zone=0" class="txt14_b">テレビ東京</a>&nbsp;）</td> 
+</tr> 
+<tr> 
+<td class="pa_t5">コーナー：ロバート・ハインデル“メシアを待ちながら”　</td> 
+</tr> 
+ 
+<td> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t10" nowrap><a href="http://click.linksynergy.com/fs-bin/click?id=cfYhAKpdLok&amp;offerid=66258.4943674086160&amp;type=15&amp;subid=0" target="_blank"><img src="http://www.tsutaya.co.jp/SAVE/108/M00011/70/WPBS90254_s.jpg" alt="英国ロイヤル・バレエ" border="0" width="90"></a><div align="center" class="txt10">画像：TSUTAYA online</div></td> 
+	<td valign="top" class="pa_t10 pa_l20"> 
+		<div class="txt14_b">英国ロイヤル・バレエ<img src="./img/tsutaya02.gif" alt="TSUTAYA" border="0" class="pa_l5"> 
+		</div> 
+<div class="pa_t5"> 
+</div> 
+	<div class="pa_t10"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td class="pa_l5"><a href="http://click.linksynergy.com/fs-bin/click?id=cfYhAKpdLok&amp;offerid=66258.4943674086160&amp;type=15&amp;subid=0" target="_blank">TSUTAYA online で商品情報を見る</a></td> 
+	<td width="20"><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+	</td> 
+	</tr> 
+	</table> 
+</td> 
+</tr> 
+ 
+<tr> 
+<td class="txt10 pa_t5">出演：<a href="http://ja.wikipedia.org/wiki/%E7%89%B9%E5%88%A5:Search?search=%E5%B0%8F%E6%9E%97%E8%96%AB&amp;fulltext=%E6%A4%9C%E7%B4%A2" target="_blank">小林薫</a> , <a href="http://ja.wikipedia.org/wiki/%E7%89%B9%E5%88%A5:Search?search=&amp;fulltext=%E6%A4%9C%E7%B4%A2" target="_blank"></a></td> 
+</tr> 
+<tr> 
+ 
+</table> 
+ 
+ 
+ 
+<div style="padding-top: 10px;"> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td width="20" bgcolor="#CCCCCC"><img src="img/t_pr.gif" width="20" height="30" alt="PRsスペース"></td> 
+<td bgcolor="#EEEEEE" style="padding: 10px 0 10px 10px"> 
+	<table border="0" cellpadding="0" cellspacing="3"> 
+	<tr> 
+	<td align="center"> 
+<!-- PR --> 
+<script type="text/javascript"><!--
+google_ad_client = "pub-1893285092792957";
+/* TVais 468x60 */
+google_ad_slot = "4673204573";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script> 
+<script type="text/javascript"
+
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script>	</td> 
+	</tr> 
+	</table> 
+</td> 
+</tr> 
+</table> 
+</div> 
+ 
+<!-- テレビ紹介注目アイテム --> 
+<div class="attention_item"> 
+<div class="attention_item_ttl"><img src="./img/attention_item.gif" width="100" height="100" alt="テレビアイズおすすめアイテム"></div> 
+ 
+<div class="attention_item01"> 
+<iframe frameborder="0" allowtransparency="true" height="100" width="100" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2558837&pid=878076311" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2558837&pid=878076311"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2558837&pid=878076311" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2558837&pid=878076311" height="100" width="100" border="0"></a></noscript></iframe> 
+</div> 
+ 
+<div class="attention_item02"> 
+<iframe frameborder="0" allowtransparency="true" height="100" width="100" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2558837&pid=878076339" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2558837&pid=878076339"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2558837&pid=878076339" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2558837&pid=878076339" height="100" width="100" border="0"></a></noscript></iframe> 
+</div> 
+ 
+<div class="attention_item03"> 
+<iframe frameborder="0" allowtransparency="true" height="100" width="100" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2558837&pid=878134733" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2558837&pid=878134733"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2558837&pid=878134733" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2558837&pid=878134733" height="100" width="100" border="0"></a></noscript></iframe> 
+</div> 
+	
+<div class="attention_item04"> 
+<iframe frameborder="0" allowtransparency="true" height="100" width="100" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2558837&pid=878134745" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2558837&pid=878134745"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2558837&pid=878134745" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2558837&pid=878134745" height="100" width="100" border="0"></a></noscript></iframe> 
+</div> 
+	
+<div class="attention_item05"> 
+<iframe frameborder="0" allowtransparency="true" height="100" width="100" marginheight="0" scrolling="no" src="http://ad.jp.ap.valuecommerce.com/servlet/htmlbanner?sid=2558837&pid=878134806" marginwidth="0"><script language="javascript" src="http://ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=2558837&pid=878134806"></script><noscript><a href="http://ck.jp.ap.valuecommerce.com/servlet/referral?sid=2558837&pid=878134806" target="_blank" ><img src="http://ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=2558837&pid=878134806" height="100" width="100" border="0"></a></noscript></iframe> 
+</div> 
+ 
+</div> 
+<!-- テレビ紹介注目アイテム終了 --> 
+ 
+</div> 
+<!--main アイテム終了--> 
+ 
+ 
+<!--今日のトピックス 開始--> 
+<div class="cle" style="padding-top: 20px;"> 
+ 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td width="700" height="20" class="back_blue_long"> 
+	<table border="0" width="680" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td>今日　2009/6/6（土）のトピックス</td> 
+	<td align="right" class="pa_r10"><a href="more_list.php?date=20090606000000&cate_id=1" class="more">もっと見る&nbsp;&gt;&gt;</a></td> 
+	</tr> 
+	</table> 
+</td> 
+</tr> 
+</table> 
+ 
+</div> 
+ 
+<div class="pa_t10"> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td> 
+ 
+	<div class="pa_t5"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1979359&tv_id=244662" class="txt14_b">「夢から醒めて」</a>　<a href="tv_dte.php?tv_id=244662">世界・ふしぎ発見！</a>　（&nbsp;<a href="tvpg_search.php?tv_station=77&tele_day=14&time_zone=0">TBS</a>&nbsp;）</td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/tsutaya02.gif" alt="TSUTAYA" border="0"></td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">THE BOOMが歌う、「世界・ふしぎ発見！」エンディングテーマ曲。</td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1979217&tv_id=244652" class="txt14_b">「いっしょの時間」</a>　<a href="tv_dte.php?tv_id=244652">サタスペ！</a>　（&nbsp;<a href="tvpg_search.php?tv_station=51&tele_day=14&time_zone=0">テレビ朝日</a>&nbsp;）</td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">元力士である大至伸行の曲。
+ライブハウスで歌声を披露していた。</td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1979213&tv_id=244652" class="txt14_b">「愛紗〜aisya〜」</a>　<a href="tv_dte.php?tv_id=244652">サタスペ！</a>　（&nbsp;<a href="tvpg_search.php?tv_station=51&tele_day=14&time_zone=0">テレビ朝日</a>&nbsp;）</td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">元人気力士である大至伸行が、2004年に発表した曲。元人気力士の紹介VTR中に、ジャケットが映ってい・・・</td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1979215&tv_id=244652" class="txt14_b">「空の星がある限り」</a>　<a href="tv_dte.php?tv_id=244652">サタスペ！</a>　（&nbsp;<a href="tvpg_search.php?tv_station=51&tele_day=14&time_zone=0">テレビ朝日</a>&nbsp;）</td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">元力士である大至伸行が2007年に発売した曲。
+この男性を紹介するVTRでジャケットが映っていた。</td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1979203&tv_id=244652" class="txt14_b">「駆けていく少女」</a>　<a href="tv_dte.php?tv_id=244652">サタスペ！</a>　（&nbsp;<a href="tvpg_search.php?tv_station=51&tele_day=14&time_zone=0">テレビ朝日</a>&nbsp;）</td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">人気バラエティ番組「電波少年」のマスコットとしてデビューした、電波子のデビュー曲。1993年発表。
+・・・</td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+</td> 
+</tr> 
+</table> 
+</div> 
+ 
+ 
+<!--今日のトピックス 終了--> 
+ 
+<!--昨日のトピックス 開始--> 
+<div class="cle" style="padding-top: 20px;"> 
+ 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td width="700" height="20" class="back_blue_long"> 
+	<table border="0" width="680" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td>昨日　2009/6/5（金）のトピックス</td> 
+	<td align="right" class="pa_r10"><a href="more_list.php?date=20090605000000&cate_id=1" class="more">もっと見る&nbsp;&gt;&gt;</a></td> 
+	</tr> 
+	</table> 
+</td> 
+</tr> 
+</table> 
+ 
+</div> 
+ 
+<div class="pa_t10"> 
+<table border="0" width="700" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td> 
+ 
+	<div class="pa_t5"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1977595&tv_id=244556" class="txt14_b">「ファースト ソング」</a>　<a href="tv_dte.php?tv_id=244556">ミュージックブレイク</a>　（&nbsp;<a href="tvpg_search.php?tv_station=65&tele_day=14&time_zone=0">テレビ東京</a>&nbsp;）</td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/mora.gif" alt="MORA" border="0"></td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">PVが流れていた童子-Tの曲。 </td> 
+	</tr> 
+	</table> 
+	</div> 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1977555&tv_id=244545" class="txt14_b">「情熱」</a>　<a href="tv_dte.php?tv_id=244545">気になる通販ランキング！ポシュレデパート深夜店</a>　（&nbsp;<a href="tvpg_search.php?tv_station=94&tele_day=14&time_zone=0">日本テレビ</a>&nbsp;）</td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/tsutaya02.gif" alt="TSUTAYA" border="0"></td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/mora.gif" alt="MORA" border="0"></td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">番組エンディングソングである、ONE☆DRAFTの曲。 </td> 
+	</tr> 
+	</table> 
+	</div> 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1977473&tv_id=244546" class="txt14_b">「サイモン＆ガーファンクル 日本ファイナルツアー」</a>　<a href="tv_dte.php?tv_id=244546">買物大図鑑</a>　（&nbsp;<a href="tvpg_search.php?tv_station=77&tele_day=14&time_zone=0">TBS</a>&nbsp;）</td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/eplus_2.gif" alt="EPLUS" border="0"></td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">16年ぶりに来日公演を行うサイモン＆ガーファンクルのライブ。
+＜日程＆場所＞
+7月10日（金）・11・・・ </td> 
+	</tr> 
+	</table> 
+	</div> 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1977476&tv_id=244546" class="txt14_b">「明日に架ける橋」</a>　<a href="tv_dte.php?tv_id=244546">買物大図鑑</a>　（&nbsp;<a href="tvpg_search.php?tv_station=77&tele_day=14&time_zone=0">TBS</a>&nbsp;）</td> 
+		<td class="pa_l5 pa_t3" valign="top"><img src="./img/kakaku.gif" alt="KAKAKUCOM" border="0"></td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">「星の王子さま天気予報」の背景でライブ映像が流れていたサイモン＆ガーファンクルの曲。 </td> 
+	</tr> 
+	</table> 
+	</div> 
+	<div class="pa_t15"> 
+	<table border="0" cellpadding="0" cellspacing="0"> 
+	<tr> 
+	<td valign="top" class="pa_t3"><img src="./img/blue_mark.gif" width="6" height="9" alt=""></td> 
+	<td valign="top"> 
+		<table border="0" cellpadding="0" cellspacing="0"> 
+		<tr> 
+		<td class="pa_l5"><a href="item_dte.php?i_id=1977726&tv_id=244542" class="txt14_b">「My Romance CD5枚組」</a>　<a href="tv_dte.php?tv_id=244542">てれとshop plus</a>　（&nbsp;<a href="tvpg_search.php?tv_station=65&tele_day=14&time_zone=0">テレビ東京</a>&nbsp;）</td> 
+		</tr> 
+		</table> 
+	</td> 
+	</tr> 
+	<tr> 
+	<td><img src="./img/spe.gif" width="1" height="1" alt=""></td> 
+	<td class="pa_t5 pa_l5">世界の一流アーティスト71組の名曲を全100曲収録したのCD。
+大人のためのスタンダード青春ヴォーカ・・・ </td> 
+	</tr> 
+	</table> 
+	</div> 
+ 
+</td> 
+</tr> 
+</table> 
+</div> 
+<!--昨日のトピックス 終了--> 
+ 
+ 
+ 
+</div> 
+<!--メインコンテンツ終了--> 
+ 
+ 
+<!--右枠部分開始--> 
+<div id="right_frame" style="margin-left: 10px;"> 
+ 
+<!--広告スペース開始--> 
+<div class="right_frame_add" align="center"> 
+ 
+<div style="width:234px;padding: 3px 0px 3px 0px;margin-bottom:6px;background:#49b9d6;color:#fff;"><span class="txt12">オススメサイト</span></div> 
+ 
+<div style="padding-bottom:3px;" align="center"> 
+<a href="http://click.linksynergy.com/fs-bin/click?id=/xw2ln1hSCE&offerid=96286.10000407&type=4&subid=0" target="new"><IMG alt="TBS ishop" border="0" src="http://ishop.tbs.co.jp/ec/tbs/af/banner/hiru_shopi_23460.gif"></a><IMG border="0" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=/xw2ln1hSCE&bids=96286.10000407&type=4&subid=0"> 
+</div> 
+ 
+<div style="padding-bottom:3px;" align="center"> 
+<a href="http://click.linksynergy.com/fs-bin/click?id=/xw2ln1hSCE&offerid=58765.900000206&type=4&subid=0" target="new"><IMG alt="ショップチャンネル：ベストセラーコスメ" border="0" src="http://www.shopch.jp/contents/afimg/af234_bestcosme.jpg"></a><IMG border="0" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=/xw2ln1hSCE&bids=58765.900000206&type=4&subid=0"> 
+</div> 
+ 
+<div style="padding-bottom:-10px;" align="center"> 
+<a href="http://click.linksynergy.com/fs-bin/click?id=/xw2ln1hSCE&offerid=96278.10000005&subid=0&type=4" target="new"><IMG border="0"   alt="ポニーキャニオン" src="http://ad.linksynergy.com/fs-bin/show?id=/xw2ln1hSCE&bids=96278.10000005&subid=0&type=4&gridnum=3"></a> 
+</div> 
+	
+</div> 
+<!--広告スペース終了--> 
+ 
+<div class="pa_t20"> 
+<table border="0" width="234" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td width="234" bgcolor="#CCCCCC" height="30" class="txt12_bla" align="center">スポンサーズリンク</td> 
+</tr> 
+<tr> 
+<td bgcolor="#EEEEEE" align="center"> 
+ 
+ 
+<div style="padding-top:10px;"> 
+<!--googleアドセンス開始--> 
+<script type="text/javascript"><!--
+google_ad_client = "pub-1893285092792957";
+/* TVais 160x600 */
+google_ad_slot = "9606771823";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script> 
+<script type="text/javascript"
+
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script> 
+<!--googleアドセンス終了--> 
+</div> 
+ 
+<div style="padding-top:10px;"> 
+<!--googleアドセンス開始--> 
+<script type="text/javascript"><!--
+google_ad_client = "pub-1893285092792957";
+/* TVais 160x600 */
+google_ad_slot = "9606771823";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script> 
+<script type="text/javascript"
+
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script> 
+<!--googleアドセンス終了--> 
+</div> 
+ 
+</td> 
+</tr> 
+<tr> 
+<td height="20" bgcolor="#EEEEEE"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+</tr> 
+</table> 
+</div> 
+</div> 
+ 
+<br class="cle"> 
+<!--右枠部分終了--> 
+ 
+ 
+<!--フッター開始--> 
+<div id="foot_frame" style="padding: 20px 0 0 10px;"> 
+<table border="0" width="960" cellpadding="0" cellspacing="0"> 
+<tr> 
+<td colspan="2" width="960" height="1" style="background-color: #000000;"><img src="img/spe.gif" width="1" height="1" alt=""></td> 
+</tr> 
+<tr> 
+<td class="pa_t5" align="left"><span class="txt10_bla"><a href="termsosuse.php" class="pr_link">ご利用上の注意</a>　|　<a href="aboutus.php" class="pr_link">運営会社について</a>　|　<a href="mailto:info@wireaction.jp" class="pr_link">お問い合わせ</a></span><p class="foot_h1">テレビ番組で紹介されたCD・DVD・お店・旅行・サイト・通販の最新情報ならテレビアイズ（TVアイズ）</p> 
+</td> 
+ 
+ 
+ 
+ 
+ 
+ 
+<td class="pa_t5" align="right"><img src="img/copy.gif" alt="Copyright(C) 2000-2009 WireAction Inc. all rights reserved. powered by IREP CO.,LTD."></td> 
+</tr> 
+</table> 
+</div> 
+<!--フッター終了--> 
+</div> 
+</div> 
+ 
+<script src="http://www.google-analytics.com/urchin.js"
+type="text/javascript"> 
+</script> 
+<script type="text/javascript"> 
+_uacct = "UA-4031677-1";
+urchinTracker();
+</script> 
+<!-- SiteCatalyst code version: H.15.1.
+Copyright 1997-2008 Omniture, Inc. More info available at
+http://www.omniture.com --> 
+<script language="JavaScript" type="text/javascript" src="//www.tvais.jp/js/s_code.js"></script> 
+<script language="JavaScript" type="text/javascript"><!--
+/* You may give each page an identifying name, server, and channel on
+the next lines. */
+s.pageName=document.title
+s.server=""
+s.channel=""
+s.pageType=""
+s.prop1=document.URL
+s.prop2=""
+s.prop3=""
+s.prop4=""
+s.prop5=""
+s.prop6=""
+s.prop7=""
+s.prop8=""
+s.prop9=""
+s.prop10=""
+/* Conversion Variables */
+s.campaign=""
+s.state=""
+s.zip=""
+s.events=""
+s.products=""
+s.purchaseID=""
+s.eVar1=""
+s.eVar2=""
+s.eVar3=""
+s.eVar4=""
+s.eVar5=""
+s.eVar6=""
+s.eVar7=""
+s.eVar8=""
+s.eVar9=""
+s.eVar10=""
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)//--></script> 
+<!-- End SiteCatalyst code version: H.15.1. --> 
+</body> 
+</html> 

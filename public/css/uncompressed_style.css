@@ -8,6 +8,7 @@
 	-webkit-touch-callout: none;
 }
 .center {
+  text-align: center;
 	margin: auto;
 	display: block;
 }
