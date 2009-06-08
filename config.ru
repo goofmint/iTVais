@@ -1,3 +1,5 @@
+require 'lib/rewindable_input'
+use ITVais::RewindableInput
 use Rack::CommonLogger
-require 'start'
+require 'app'
 run Sinatra::Application
