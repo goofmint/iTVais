@@ -1,0 +1,103 @@
+<!--
+summary
+  # その他？
+  # トピック
+  # 出演
+  # キャラクター
+  # ゲスト
+-->
+<span class="graytitle"><%= @tv_title %></span>
+<% @summary.each do |section| %>
+  <% next if !section[1] %>
+  <ul class="pageitem">
+    <span class="header" style="padding: 7px 0 0 7px;"><%= section[0] %></span>
+    <li class="textbox">
+    <%= section[1].inner_text.sub(/【#{section[0]}】/, '') %>
+    </li>
+  </ul>
+<% end %>
+<!--
+parts
+  # 番組構成
+  #   紹介された商品へのリンク
+-->
+<style>
+  .part-title {
+    display: block;
+    font-weight: bold;
+    color: rgb(73,102,145);
+    font-size: 12pt;
+    margin: 3px 0;
+    line-height: 14pt;
+  }
+
+  .item-header {
+    font-size: 9px;
+  }
+
+  .item-list {
+	  border: #cccccc solid 1px;
+  }
+
+  .item {
+	  border-top: #cccccc solid 1px;
+  }
+</style>
+<span class="graytitle" style="clear: both;">内容</span>
+  <ul class="pageitem">
+<% @parts.each do |part| %>
+  <% next if !part.at(:strong) %>
+  <li class="textbox">
+  <span class="part-title"><strong><%= part.at(:strong).inner_text.gsub(/「|」/, '') %></strong></span>
+  <% if (part/"a[@href^='item_dte.php']").size > 0 %>
+  <ul class="pageitem item-list">
+    <li class="textbox item-header">紹介された商品</li>
+    <% (part/"a[@href^='item_dte.php']").each do |item| %>
+      <li class="textbox item">
+      <a href="/item/<%= item[:href].slice(/i_id=(\d+)/, 1) %>/<%= item[:href].slice(/tv_id=(\d+)/, 1) %>"><%= item.inner_text %></a>
+      </li>
+    <% end %>
+  </ul>
+    <% end %>
+  </li>
+<% end %>
+  </ul>
+<!--
+link
+  # 前回へのリンク又は次回へのリンク（あれば）
+-->
+<style>
+  div.prev {
+    float: left;
+    margin-left: 15px;
+    line-height: 1.5em;
+  }
+  div.next {
+    float: right;
+    margin-right: 15px;
+    line-height: 1.5em;
+  }
+.prev a, .next a {
+  padding: 5px;
+	-webkit-border-image: url("../images/navbutton.png") 0 5 0 5;
+	border-width: 0 5px;
+	-webkit-border-radius: 6px;
+  color: #fff;
+  font-size: 9pt;
+  font-weight: bold;
+  text-decoration: none;
+}
+</style>
+<div>
+<% if @prev && @prev.at(:a) %>
+  <div class="prev">
+   <a href="/tv/<%= (@prev.at(:a)[:href]).slice(/tv_id=(\d+)/, 1) %>">前回</a>
+ </div>
+<% end %>
+<% if @next && @next.at(:a) %>
+  <div class="next">
+   <a href="/tv/<%= (@next.at(:a)[:href]).slice(/tv_id=(\d+)/, 1) %>">次回</a>
+ </div>
+<% end %>
+</div>
+<div style="clear: both;"></div>

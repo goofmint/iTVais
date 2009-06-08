@@ -29,9 +29,17 @@
       <span class="header" style="padding: 7px 0 0 7px;"<%= id_for_a_line(l) %>><%= l %></span>
       <% (@programs[i]/'td.pa_l5').each do |p| %>
         <li class="textbox">
-        <a href="<%= p.at('a')[:href] %>"><%= p.inner_text %></a>
+        <% if (p.at('a')[:href]).slice(/tv_id=(\d+)/, 1) %>
+          <a href="/tv/<%= (p.at('a')[:href]).slice(/tv_id=(\d+)/, 1) %>"><%= p.inner_text %></a>
+        <% else %>
+          <a href="/tv/t-<%= (p.at('a')[:href]).slice(/t_id=(\d+)/, 1) %>"><%= p.inner_text %></a>
+        <% end %>
         </li>
       <% end %>
     </ul>
   <% end %>
+<% end %>
+<% if false %>
+  # 元サイトのtv_idがt_idになることがある。なんだよそれ。
+  # しかもtv_idも別に持ってやがる。
 <% end %>

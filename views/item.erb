@@ -1,0 +1,35 @@
+<!--
+category
+  # カテゴリ
+
+item
+  # 商品画像
+  # 商品名
+  # 商品説明
+  # 商品URL
+-->
+<span class="graytitle"><%= @category %></span>
+<ul class="pageitem">
+<span class="header" style="padding: 7px 0 0 7px;"><%= @item[:name] %></span>
+<li class="withimage" style="padding: 7px; line-height: 1.4em;"> 
+<img src="<%= @item[:image_url] %>" style="float:left; margin: 0 10px 5px 0;" />
+<%= @item[:info].inner_html.gsub(/<br>/, '<br />') %>
+</li>
+<% if @item[:link] %>
+<li class="textbox" style="clear:both;"> <%= @item[:link] %> </li>
+<% end %>
+</ul>
+<!--
+tv
+  # 放映日、番組名、局名
+  # コーナー名
+-->
+<span class="graytitle" style="clear: both;">番組情報</span>
+<ul class="pageitem">
+<li class="textbox">
+<%= @tv %>
+</li>
+<li class="textbox">
+<%= @part %>
+</li>
+</ul>
